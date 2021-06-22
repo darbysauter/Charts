@@ -172,10 +172,17 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
     {
         super.draw(rect)
 
-        guard data != nil, let renderer = renderer else { return }
+        guard data != nil, let renderer = renderer else {
+            drawRequestInProgress = false
+            return
+            
+        }
         
         let optionalContext = NSUIGraphicsGetCurrentContext()
-        guard let context = optionalContext else { return }
+        guard let context = optionalContext else {
+            drawRequestInProgress = false
+            return
+        }
 
         // execute all drawing commands
         drawGridBackground(context: context)
@@ -293,7 +300,7 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
         drawDescription(in: context)
         
         drawMarkers(context: context)
-        drawRequestInProgress = true
+        drawRequestInProgress = false
     }
     
     private var _autoScaleLastLowestVisibleX: Double?
