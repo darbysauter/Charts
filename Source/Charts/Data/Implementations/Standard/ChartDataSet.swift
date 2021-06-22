@@ -197,16 +197,21 @@ open class ChartDataSet: ChartBaseDataSet
     open override func entriesForXValue(_ xValue: Double) -> [ChartDataEntry]
     {
         let match: (ChartDataEntry) -> Bool = { $0.x == xValue }
-        let i = partitioningIndex(where: match)
-        guard i < endIndex else {
-            for e in self {
-                if Int(e.x) == Int(xValue) {
-                    let a = firstIndex(where: match)
-                    print("ERROR THIS SHOULD NEVER HAPPEN \(a) - \(e.x) - \(xValue) \(e.x == xValue)")
-                }
-            }
+        let ind = firstIndex(where: match)
+        guard let ind = ind else {
             return []
         }
+        let i = distance(from: startIndex, to: ind)
+//        let i = partitioningIndex(where: match)
+//        guard i < endIndex else {
+//            for e in self {
+//                if Int(e.x) == Int(xValue) {
+//                    let a = firstIndex(where: match)
+//                    print("ERROR THIS SHOULD NEVER HAPPEN \(a) - \(e.x) - \(xValue) \(e.x == xValue)")
+//                }
+//            }
+//            return []
+//        }
         return self[i...].prefix(while: match)
     }
     
