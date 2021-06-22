@@ -466,7 +466,6 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
             }
             return
         }
-        drawRequestInProgress = true
         var high = highlight
         guard
             let h = high,
@@ -481,6 +480,7 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
                 }
                 return
         }
+        drawRequestInProgress = true
 
         // set the indices to highlight
        highlighted = [h]
