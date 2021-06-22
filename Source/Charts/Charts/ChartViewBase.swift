@@ -265,7 +265,10 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
     
     open override func draw(_ rect: CGRect)
     {
-        guard let context = NSUIGraphicsGetCurrentContext() else { return }
+        guard let context = NSUIGraphicsGetCurrentContext() else {
+            drawRequestInProgress = false
+            return
+        }
 
         if data === nil && !noDataText.isEmpty
         {
@@ -285,6 +288,7 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
                                       attributes: [.font: noDataFont,
                                                    .foregroundColor: noDataTextColor,
                                                    .paragraphStyle: paragraphStyle])
+            drawRequestInProgress = false
 
             return
         }
