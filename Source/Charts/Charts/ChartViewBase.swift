@@ -449,23 +449,6 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
     /// Highlights the value selected by touch gesture.
     @objc open func highlightValue(_ highlight: Highlight?, callDelegate: Bool)
     {
-        if (drawRequestInProgress) { // Buffer up to 1 call, ignore others until the buffered execution begins
-            if (highlightValueQueued) { // call already buffered
-                return
-            }
-            highlightValueQueued = true
-            DispatchQueue.global(qos: .background).async {
-                while (self.drawRequestInProgress) { // wait for current draw request to finish
-                    usleep(useconds_t(50 * 1000)) // sleep for 50 millisec
-                }
-                self.highlightValueQueued = false
-                DispatchQueue.main.async {
-                    self.highlightValue(highlight, callDelegate: callDelegate)
-                }
-                return
-            }
-            return
-        }
         var high = highlight
         guard
             let h = high,
