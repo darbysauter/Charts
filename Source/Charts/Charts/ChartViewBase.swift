@@ -294,6 +294,7 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
             calculateOffsets()
             offsetsCalculated = true
         }
+        drawRequestInProgress = false
     }
     
     /// Draws the description text in the bottom right corner of the chart (per default)
