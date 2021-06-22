@@ -201,7 +201,8 @@ open class ChartDataSet: ChartBaseDataSet
         guard i < endIndex else {
             for e in self {
                 if Int(e.x) == Int(xValue) {
-                    print("ERROR THIS SHOULD NEVER HAPPEN")
+                    let a = firstIndex(where: match)
+                    print("ERROR THIS SHOULD NEVER HAPPEN \(a) - \(e.x) - \(xValue)")
                 }
             }
             return []
